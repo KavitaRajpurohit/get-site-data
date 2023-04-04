@@ -3,9 +3,11 @@ import { TextField, Button, Typography, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { ScrapingBeeClient } from "scrapingbee";
 import cheerio from "cheerio";
+import { URLs } from "./TestURLList";
 
 const GetSiteDataForm = () => {
   const [siteUrl, setSiteUrl] = useState("");
+  const [siteUrlDummy, setSiteUrlDummy] = useState("");
   const [siteInfo, setSiteInfo] = useState({
     title: "",
     description: "",
@@ -94,6 +96,7 @@ const GetSiteDataForm = () => {
                   language:
                     $("html")[0]?.attribs?.lang || "Not any language detected.",
                 });
+                setSiteUrlDummy(siteUrl);
                 setError("");
               })
               .catch((e) => {
@@ -115,6 +118,18 @@ const GetSiteDataForm = () => {
           );
           setLoading(false);
         });
+    } else {
+      setError("Please enter a valid URL.");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+      setSiteInfo({
+        title: "",
+        description: "",
+        author: "",
+        contentType: "",
+        language: "",
+      });
     }
   };
 
@@ -122,6 +137,7 @@ const GetSiteDataForm = () => {
     <div style={{ marginTop: 30 }}>
       <form style={{ textAlign: "center" }}>
         <TextField
+          className={`${error ? "hasError" : ""}`}
           fullWidth
           id="outlined-basic"
           label="Site URL"
@@ -184,9 +200,9 @@ const GetSiteDataForm = () => {
               Content-type: {siteInfo?.contentType}
             </Typography>
           )}
-          {siteInfo?.title && siteUrl && (
+          {siteUrlDummy && (
             <Typography sx={{ mt: 3 }} variant="h6">
-              URL: {siteUrl}
+              URL: {siteUrlDummy}
             </Typography>
           )}
           {siteInfo?.language && (
@@ -197,6 +213,33 @@ const GetSiteDataForm = () => {
           )}
         </>
       )}
+      <br />
+      <hr />
+      <Typography variant="body1" sx={{ mt: 3, mb: 1 }}>
+        Test URLs
+      </Typography>
+      {URLs.map((url) => {
+        return (
+          <div key={url}>
+            <a
+              href="javascript:void(0)"
+              onClick={() => {
+                setSiteUrl(url);
+                setSiteInfo({
+                  title: "",
+                  description: "",
+                  author: "",
+                  contentType: "",
+                  language: "",
+                });
+                setSiteUrlDummy("");
+              }}
+            >
+              {url}
+            </a>
+          </div>
+        );
+      })}
     </div>
   );
 };

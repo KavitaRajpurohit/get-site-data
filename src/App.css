@@ -1,0 +1,6 @@
+.hasError .MuiOutlinedInput-notchedOutline {
+  border-color: red !important;
+}
+.hasError .MuiFormLabel-root {
+  color: red !important;
+}
