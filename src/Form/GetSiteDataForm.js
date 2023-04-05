@@ -27,7 +27,7 @@ const GetSiteDataForm = () => {
 
   const getSiteData = async (url) => {
     let client = new ScrapingBeeClient(
-      "6JXSVDEAKWCGPQHF67L4ISD1RLIDLVH9LCG2AA09HITOTVDMGV5TXKYTT8ZAU417POJE4N5FJ3XPCF6I"
+      "MYK3RUV8F9UD0UTAXVWG2W9W4NAZLI3B2XH71SQW5WFO4G3U8T4F2CZEM38FR9CASWYU60AWETCF67GH"
     );
     let response = await client.get({
       url: url,
